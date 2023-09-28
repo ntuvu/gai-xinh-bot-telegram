@@ -81,19 +81,60 @@ def send_welcome(message):
     bot.send_photo(message, "HELLO, how are you doing?")
 
 
+# ảnh gái xinh
 @bot.message_handler(commands=["bulul"])
 def them_bu_lul(message):
     key_words_random = random.randint(0, len(key_words_list) - 1)
     print(get_images_list(key_words_list[key_words_random]))
     images_url_list = get_images_list(key_words_list[key_words_random])
     image_random = random.randint(0, len(images_url_list) - 1)
-    print(images_url_list[image_random], key_words_list[key_words_random])
+    # print(images_url_list[image_random], key_words_list[key_words_random])
     bot.send_photo(chat_id=message.chat.id, photo=images_url_list[image_random])
+
+
+###################################################################################################
+
+# call api get vids
+url = "https://tiktok-video-no-watermark2.p.rapidapi.com/feed/search"
+headers = {
+    "X-RapidAPI-Key": "edf50f496amshfb8471d5b2ae4f6p15f8d3jsn65e9d00b9773",
+    "X-RapidAPI-Host": "tiktok-video-no-watermark2.p.rapidapi.com",
+}
+
+
+def get_video():
+    videos_result = []
+    cursor = random.randint(1, 50)
+    keyword = random.choice(["#gaixinh", "#gaixinhtiktok", "gái xinh", "bikini"])
+    querystring = {
+        "keywords": keyword,
+        "count": "30",  # maximum 30 video 1 time
+        "cursor": cursor,
+        "region": "VN",
+        "publish_time": "0",
+        "sort_type": "0",
+    }
+    response = requests.get(url, headers=headers, params=querystring).json()
+    videos = response["data"]["videos"]
+    for video in videos:
+        videos_result.append(video["play"])
+    try:
+        random_vid = videos_result[random.randint(0, len(videos_result) - 1)]
+    except Exception as err:
+        print(err)
+    return random_vid
+
+
+# vid gái xinh
+@bot.message_handler(commands=["buvid"])
+def tiktok_random(message):
+    tiktok_video = get_video()
+    bot.send_video(chat_id=message.chat.id, video=tiktok_video)
 
 
 @bot.message_handler(func=lambda msg: True)
 def echo_all(message):
-    bot.reply_to(message, message.text)
+    bot.reply_to(message, "?????")
 
 
 bot.infinity_polling()
