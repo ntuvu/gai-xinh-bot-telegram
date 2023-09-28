@@ -9,7 +9,8 @@ load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 bot = telebot.TeleBot(BOT_TOKEN)
-print(BOT_TOKEN)
+
+# print(BOT_TOKEN)
 
 ####################################################################################################
 
@@ -62,13 +63,13 @@ key_words_list = [
     "chinesegirl",
 ]
 
-key_words_random = random.randint(0, len(key_words_list) - 1)
+# key_words_random = random.randint(0, len(key_words_list) - 1)
 
-images_url_list = get_images_list(key_words_list[key_words_random])
+# images_url_list = get_images_list(key_words_list[key_words_random])
 
-image_random = random.randint(0, len(images_url_list) - 1)
+# image_random = random.randint(0, len(images_url_list) - 1)
 
-print(images_url_list[image_random], key_words_list[key_words_random])
+# print(images_url_list[image_random], key_words_list[key_words_random])
 
 
 @bot.message_handler(commands=["start", "hello"])
@@ -81,7 +82,7 @@ def them_bu_lul(message):
     key_words_random = random.randint(0, len(key_words_list) - 1)
     images_url_list = get_images_list(key_words_list[key_words_random])
     image_random = random.randint(0, len(images_url_list) - 1)
-    bot.reply_to(message, images_url_list[image_random])
+    bot.reply_to(message, f'<a href="{images_url_list[image_random]}"> </a>')
 
 
 @bot.message_handler(func=lambda msg: True)
