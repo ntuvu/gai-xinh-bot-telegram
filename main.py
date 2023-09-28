@@ -74,7 +74,7 @@ key_words_list = [
 
 @bot.message_handler(commands=["start", "hello"])
 def send_welcome(message):
-    bot.reply_to(message, "HELLO, how are you doing?")
+    bot.send_photo(message, "HELLO, how are you doing?")
 
 
 @bot.message_handler(commands=["bulul"])
@@ -82,7 +82,7 @@ def them_bu_lul(message):
     key_words_random = random.randint(0, len(key_words_list) - 1)
     images_url_list = get_images_list(key_words_list[key_words_random])
     image_random = random.randint(0, len(images_url_list) - 1)
-    bot.reply_to(message, f'<a href="{images_url_list[image_random]}"> </a>')
+    bot.send_photo(chat_id=message.chat.id, photo=images_url_list[image_random])
 
 
 @bot.message_handler(func=lambda msg: True)
