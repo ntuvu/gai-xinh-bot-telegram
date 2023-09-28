@@ -61,6 +61,12 @@ key_words_list = [
     "bikini-asian",
     "vietnam-tiktoker",
     "chinesegirl",
+    "gym-girl",
+    "cosplay-girl",
+    "body-girl",
+    "micro-bikini",
+    "korean-girl",
+    "gai-viet",
 ]
 
 # key_words_random = random.randint(0, len(key_words_list) - 1)
@@ -68,8 +74,6 @@ key_words_list = [
 # images_url_list = get_images_list(key_words_list[key_words_random])
 
 # image_random = random.randint(0, len(images_url_list) - 1)
-
-# print(images_url_list[image_random], key_words_list[key_words_random])
 
 
 @bot.message_handler(commands=["start", "hello"])
@@ -80,8 +84,10 @@ def send_welcome(message):
 @bot.message_handler(commands=["bulul"])
 def them_bu_lul(message):
     key_words_random = random.randint(0, len(key_words_list) - 1)
+    print(get_images_list(key_words_list[key_words_random]))
     images_url_list = get_images_list(key_words_list[key_words_random])
     image_random = random.randint(0, len(images_url_list) - 1)
+    print(images_url_list[image_random], key_words_list[key_words_random])
     bot.send_photo(chat_id=message.chat.id, photo=images_url_list[image_random])
 
 
